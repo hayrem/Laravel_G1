@@ -13,4 +13,12 @@ class Plan extends Model
         'date_time', 
         'farmer_id'
     ];
+
+    public function farmer() {
+        return $this->belongsTo(Farmer::class);
+    }
+
+    public function instruction() {
+        return $this->hasMany(Instruction::class);
+    }
 }

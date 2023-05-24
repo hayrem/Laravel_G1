@@ -9,6 +9,11 @@ class Farmer extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name', 'phone'
+        'name',
+        'phone'
     ];
+
+    public function farm() {
+        return $this->hasMany(Farm::class);
+    }
 }

@@ -16,4 +16,12 @@ class Drone extends Model
         'date_time', 
         'location_id'
     ];
+
+    public function location() {
+        return $this->hasMany(Location::class);
+    }
+
+    public function instruction() {
+        return $this->hasMany(Instruction::class);
+    }
 }

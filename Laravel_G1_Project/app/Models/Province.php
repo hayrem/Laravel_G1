@@ -11,4 +11,8 @@ class Province extends Model
     protected $fillable = [
         'province'
     ];
+
+    public function farm() {
+        return $this->hasMany(Farm::class);
+    }
 }
