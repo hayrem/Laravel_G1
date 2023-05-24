@@ -9,7 +9,7 @@ class Farm extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'are',
+        'area',
         'farmer_id',
         'province_id'
     ];
