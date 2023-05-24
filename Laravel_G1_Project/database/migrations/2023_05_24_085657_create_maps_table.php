@@ -11,14 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('plans', function (Blueprint $table) {
+        Schema::create('maps', function (Blueprint $table) {
             $table->id();
-            $table->string('plan_name');
-            $table->dateTime('date_time');
-            $table->unsignedBigInteger('farmer_id');
-            $table->foreign('farmer_id')
+            $table->string('image');
+            $table->unsignedBigInteger('drone_id');
+            $table->foreign('drone_id')
             ->references('id')
-            ->on('farmers')
+            ->on('drones')
+            ->onDelete('cascade');
+            $table->unsignedBigInteger('farm_id');
+            $table->foreign('farm_id')
+            ->references('id')
+            ->on('farms')
             ->onDelete('cascade');
         });
     }
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('plans');
+        Schema::dropIfExists('maps');
     }
 };

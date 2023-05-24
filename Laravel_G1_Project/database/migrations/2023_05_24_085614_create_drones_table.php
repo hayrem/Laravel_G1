@@ -13,7 +13,16 @@ return new class extends Migration
     {
         Schema::create('drones', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('drone_id');
+            $table->string('type_of_drone');
+            $table->string('battery');
+            $table->string('payload_capacity');
+            $table->dateTime('date_time');
+            $table->unsignedBigInteger('location_id');
+            $table->foreign('location_id')
+            ->references('id')
+            ->on('locations')
+            ->onDelete('cascade');
         });
     }
 

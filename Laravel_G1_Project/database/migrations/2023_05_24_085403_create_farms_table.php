@@ -10,10 +10,21 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
+    { 
         Schema::create('farms', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('area');
+            $table->unsignedBigInteger('farmer_id');
+            $table->foreign('farmer_id')
+            ->references('id')
+            ->on('farmers')
+            ->onDelete('cascade');        
+            $table->unsignedBigInteger('province_id');
+            $table->foreign('province_id')
+            ->references('id')
+            ->on('provinces')
+            ->onDelete('cascade');         
+            
         });
     }
 
