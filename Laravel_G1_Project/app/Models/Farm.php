@@ -13,4 +13,11 @@ class Farm extends Model
         'farmer_id',
         'province_id'
     ];
+
+    public function farmer() {
+        return $this->belongsTo(Farmer::class);
+    }
+    public function province() {
+        return $this->belongsTo(Province::class);
+    }
 }

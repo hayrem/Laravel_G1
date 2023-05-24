@@ -14,4 +14,12 @@ class Instruction extends Model
         'plan_id',
         'drone_id'
     ];
+
+    public function plan() {
+        return $this->belongsTo(Plan::class);
+    }
+
+    public function drone() {
+        return $this->belongsTo(Drone::class);
+    }
 }
