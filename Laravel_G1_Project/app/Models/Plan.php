@@ -12,7 +12,7 @@ class Plan extends Model
         'plan_name',
         'date_time', 
         'farmer_id',
-        'map_id'
+        'farm_id'
     ];
 
     public function farmer() {
