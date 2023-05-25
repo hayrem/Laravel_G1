@@ -24,6 +24,7 @@ return new class extends Migration
             ->references('id')
             ->on('farms')
             ->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

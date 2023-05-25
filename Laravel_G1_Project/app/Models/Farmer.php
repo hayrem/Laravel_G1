@@ -42,5 +42,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'phone'
     ];
+
+    public function farm() {
+        return $this->hasMany(Farm::class);
+    }
 }

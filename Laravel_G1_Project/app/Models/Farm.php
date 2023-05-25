@@ -9,8 +9,15 @@ class Farm extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'are',
+        'area',
         'farmer_id',
         'province_id'
     ];
+
+    public function farmer() {
+        return $this->belongsTo(Farmer::class);
+    }
+    public function province() {
+        return $this->belongsTo(Province::class);
+    }
 }

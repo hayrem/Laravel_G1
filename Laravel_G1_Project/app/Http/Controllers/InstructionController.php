@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Instruction;
 use App\Http\Requests\StoreInstructionRequest;
 use App\Http\Requests\UpdateInstructionRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class InstructionController extends Controller
 {
@@ -29,17 +31,28 @@ class InstructionController extends Controller
      */
     public function store(StoreInstructionRequest $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'speed' => 'required|string',
+            'height' => 'required|string',
+            'plan_id' => 'required',
+            'drone_id' => 'required',
+        ]);
+        if($validator->fails()) {
+            return $validator->errors();
+        }
+        $drone = Instruction::create($validator->validated());
+        return response()->json(['Message' => 'Instruction successfully created!', 'Drone' => $drone], 200);
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Instruction $instruction)
+    public function show(Instruction $id)
     {
         //
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      */
@@ -47,12 +60,20 @@ class InstructionController extends Controller
     {
         //
     }
-
+    
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateInstructionRequest $request, Instruction $instruction)
+    public function update(Request $request, Instruction $id)
     {
+        $instruction = Instruction::find($id);
+        $instruction->update([
+            'speed' => request('speed'),
+            'height' => request('height'),
+            'plan_id' => request('plan_id'),
+            'drone_id' => request('drone_id'),
+        ]);
+        return response()->json(['Message' => 'Drone successfully updated', 'Drone' => $instruction], 200);
         //
     }
 
