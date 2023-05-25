@@ -11,7 +11,8 @@ class Plan extends Model
     protected $fillable = [
         'plan_name',
         'date_time', 
-        'farmer_id'
+        'farmer_id',
+        'map_id'
     ];
 
     public function farmer() {

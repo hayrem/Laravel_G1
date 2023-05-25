@@ -8,6 +8,8 @@ use App\Http\Controllers\FarmController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\DroneController;
+use App\Http\Controllers\PlanController;
+use App\Http\Controllers\InstructionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -45,3 +47,13 @@ Route::prefix('locations')->group(function(){
 Route::prefix('drones')->group(function(){
     Route::resource('drone', DroneController::class);
 });
+
+Route::prefix('plans')->group(function(){
+    Route::resource('plan', PlanController::class);
+});
+Route::prefix('instructions')->group(function(){
+    Route::resource('instruction', InstructionController::class);
+});
+
+
+

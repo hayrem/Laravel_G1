@@ -20,8 +20,12 @@ return new class extends Migration
             ->references('id')
             ->on('farmers')
             ->onDelete('cascade');
+            $table->unsignedBigInteger('map_id');
+            $table->foreign('map_id')
+            ->references('id')
+            ->on('maps')
+            ->onDelete('cascade');
             $table->timestamps();
-
         });
     }
 
