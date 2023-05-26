@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{FarmerController,AuthenticationController};
+use App\Http\Controllers\{FarmerController,AuthenticationController,MapController};
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProvinceController;
@@ -53,5 +53,6 @@ Route::prefix('instructions')->group(function(){
     Route::resource('instruction', InstructionController::class);
 });
 
+Route::get('maps/{provice}/{id}',[MapController::class, 'dowloadImage']);
 
 

@@ -100,8 +100,8 @@ class DroneController extends Controller
     {
         $drone = Drone::where('drone_id', $id)->first();
         $location_id = $drone->location_id;
-        $location = Location::find($location_id)->get();
-        $location = LocationResource::collection($location);
+        $location = Location::find($location_id);
+        $location = new LocationResource($location);
         return response()->json(['Message' => 'Here is the drone', 'Drone' => $location], 200);
     }
     public function droneInfo($id)
