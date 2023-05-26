@@ -19,7 +19,7 @@ class Instruction extends Model
         return $this->belongsTo(Plan::class);
     }
 
-    public function drone() {
+    public function drones() {
         return $this->belongsTo(Drone::class);
     }
 }

@@ -49,6 +49,7 @@ Route::get('drones/code/{code}/location',[DroneController::class, 'getLocationBy
 Route::prefix('plans')->group(function(){
     Route::resource('plan', PlanController::class);
 });
+Route::get('plans/{name}', [PlanController::class, 'getSpecifictPlan']);
 Route::prefix('instructions')->group(function(){
     Route::resource('instruction', InstructionController::class);
 });
