@@ -12,6 +12,10 @@ class Location extends Model
         'latitude',
         'longitude'
     ];
+    public function drones() {
+        return $this->hasMany(Drone::class);
+    }
+
 
     
 }
