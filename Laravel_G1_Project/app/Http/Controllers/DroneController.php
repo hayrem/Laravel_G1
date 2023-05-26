@@ -6,6 +6,8 @@ use App\Models\Drone;
 use App\Http\Requests\StoreDroneRequest;
 use App\Http\Requests\UpdateDroneRequest;
 use Illuminate\Http\Request;
+use App\Http\Resources\DroneResources;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class DroneController extends Controller
@@ -88,5 +90,12 @@ class DroneController extends Controller
         $drone = Drone::find($id);
         $drone->delete();
         return response()->json(['Message' => 'Drone successfully deleted!'], 200);
+    }
+
+    public function droveInfo($code)
+    {
+        $drone = DB::table('drones')->where('drone_id', $code)->first();
+        $drone =new DroneResources($drone);
+        return response()->json(['Message' => 'Here is the drone', 'Drone' => $drone], 200);
     }
 }

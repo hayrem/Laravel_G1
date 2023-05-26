@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\location;
 class Drone extends Model
 {
     use HasFactory;
@@ -18,7 +18,7 @@ class Drone extends Model
     ];
 
     public function location() {
-        return $this->hasMany(Location::class);
+        return $this->belongsTo(Location::class);
     }
 
     public function instruction() {

@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::post('register/sign_up',[AuthenticationController::class, 'sign_up']);
 Route::post('register/sign_in',[AuthenticationController::class, 'sign_in']);
-Route::post('register/sign_out',[AuthenticationController::class, 'sign_out,']);
+Route::post('register/sign_out',[AuthenticationController::class, 'sign_out']);
 
 Route::prefix('farmers')->group(function(){
     Route::resource('farmers', FarmerController::class);
@@ -45,3 +45,5 @@ Route::prefix('locations')->group(function(){
 Route::prefix('drones')->group(function(){
     Route::resource('drone', DroneController::class);
 });
+Route::get('drones/code/{code}',[DroneController::class, 'droveInfo']);
+// Route::get('drones/code/{code}/location',[DroneController::class, 'droveInfo']);
