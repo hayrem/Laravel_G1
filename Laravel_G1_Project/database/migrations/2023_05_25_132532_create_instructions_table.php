@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('speed');
             $table->string('height');
+            $table->boolean('drone_running')->default(false);
             $table->unsignedBigInteger('plan_id');
             $table->foreign('plan_id')
             ->references('id')
