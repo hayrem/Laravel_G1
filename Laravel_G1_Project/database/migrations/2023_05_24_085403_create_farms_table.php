@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('farms', function (Blueprint $table) {
             $table->id();
             $table->string('area');
-            $table->unsignedBigInteger('farmer_id');
-            $table->foreign('farmer_id')
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
             ->references('id')
-            ->on('farmers')
+            ->on('users')
             ->onDelete('cascade');        
             $table->unsignedBigInteger('province_id');
             $table->foreign('province_id')

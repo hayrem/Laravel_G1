@@ -20,7 +20,7 @@ class DroneResources extends JsonResource
             'battery_level' => $this->battery,
             'capacity' => $this->payload_capacity,
             'date_time' => $this->date_time,
-            'location'=>new LocationResources($this->location)
+            'locations' => new LocationResources($this->location)
         ];
     }
 }

@@ -15,13 +15,17 @@ return new class extends Migration
             $table->id();
             $table->string('plan_name');
             $table->dateTime('date_time');
-            $table->unsignedBigInteger('farmer_id');
-            $table->foreign('farmer_id')
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
             ->references('id')
-            ->on('farmers')
+            ->on('users')
+            ->onDelete('cascade');
+            $table->unsignedBigInteger('farm_id');
+            $table->foreign('farm_id')
+            ->references('id')
+            ->on('farms')
             ->onDelete('cascade');
             $table->timestamps();
-
         });
     }
 

@@ -15,7 +15,9 @@ class InstructionController extends Controller
      */
     public function index()
     {
-        //
+        $instruction = Instruction::all();
+        return response()->json(['Message' => 'Here is all the instructions', 'Instruction' => $instruction], 200);
+
     }
 
     /**
@@ -29,7 +31,7 @@ class InstructionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreInstructionRequest $request)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'speed' => 'required|string',
@@ -40,17 +42,18 @@ class InstructionController extends Controller
         if($validator->fails()) {
             return $validator->errors();
         }
-        $drone = Instruction::create($validator->validated());
-        return response()->json(['Message' => 'Instruction successfully created!', 'Drone' => $drone], 200);
-
+        $instruction = Instruction::create($validator->validated());
+        return response()->json(['Message' => 'Instruction successfully created!', 'Instruction' => $instruction], 200);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Instruction $id)
+    public function show($id)
     {
-        //
+        $instruction = Instruction::find($id);
+        return response()->json(['Message' => 'Here is the instruction', 'Instruction' => $instruction], 200);
+
     }
     
     /**
@@ -73,15 +76,17 @@ class InstructionController extends Controller
             'plan_id' => request('plan_id'),
             'drone_id' => request('drone_id'),
         ]);
-        return response()->json(['Message' => 'Drone successfully updated', 'Drone' => $instruction], 200);
+        return response()->json(['Message' => 'Instruction successfully updated', 'Instruction' => $instruction], 200);
         //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Instruction $instruction)
+    public function destroy( $id)
     {
-        //
+        $instruction = Instruction::find($id);
+        $instruction->delete();
+        return response()->json(['Message' => 'instruction successfully deleted!'], 200);
     }
 }

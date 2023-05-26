@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Drone;
+use App\Models\{Drone,Location};
 use App\Http\Requests\StoreDroneRequest;
 use App\Http\Requests\UpdateDroneRequest;
+use App\Http\Resources\{DroneResource,LocationResource};
 use Illuminate\Http\Request;
 use App\Http\Resources\DroneResources;
 use Illuminate\Support\Facades\DB;
@@ -33,7 +34,7 @@ class DroneController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDroneRequest $request)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'drone_id' => 'required|string',
@@ -44,7 +45,7 @@ class DroneController extends Controller
         if($validator->fails()) {
             return $validator->errors();
         }
-        $drone = Drone::create($validator->validated());
+        $drone = Drone::create($request->all());
         return response()->json(['Message' => 'drone successfully created!', 'Drone' => $drone], 200);
     }
 
@@ -54,6 +55,7 @@ class DroneController extends Controller
     public function show( $id)
     {
         $drone = Drone::find($id);
+        $drone = new DroneResource($drone);
         return response()->json(['Message' => 'Here is the drone', 'Drone' => $drone], 200);
     }
 
@@ -92,10 +94,18 @@ class DroneController extends Controller
         return response()->json(['Message' => 'Drone successfully deleted!'], 200);
     }
 
-    public function droveInfo($code)
+    public function getLocationByDroneId($id)
     {
-        $drone = DB::table('drones')->where('drone_id', $code)->first();
-        $drone =new DroneResources($drone);
-        return response()->json(['Message' => 'Here is the drone', 'Drone' => $drone], 200);
+        $drone = Drone::where('drone_id', $id)->first();
+        $location_id = $drone->location_id;
+        $location = Location::find($location_id)->get();
+        $location = LocationResource::collection($location);
+        return response()->json(['Message' => 'Here is the drone', 'Drone' => $location], 200);
     }
+    public function droneInfo($id)
+    {
+        $droneInfo = Drone::where('drone_id', $id)->first();
+        return response()->json(['Message' => 'Here is the drone', 'Drone' => $droneInfo], 200);
+    }
+
 }
