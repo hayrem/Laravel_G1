@@ -34,10 +34,10 @@ class PlanController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'plan_name' => 'required|string',
-            'date_time' => 'required',
-            'farmer_id' => 'required',
-            'map_id' => 'required',
+            'plan_name' => 'required|string|max:255',
+            'date_time' => 'required|string|max:255',
+            'user_id' => 'required|integer',
+            'farm_id' => 'required|integer',
         ]);
         if($validator->fails()) {
             return $validator->errors();

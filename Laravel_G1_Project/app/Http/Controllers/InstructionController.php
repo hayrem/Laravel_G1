@@ -67,7 +67,7 @@ class InstructionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Instruction $id)
+    public function update(Request $request, $id)
     {
         $instruction = Instruction::find($id);
         $instruction->update([

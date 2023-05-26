@@ -74,7 +74,7 @@ class ProvinceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Province $id)
+    public function destroy($id)
     {
         $province = Province::find($id);
         $province->delete();

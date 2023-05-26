@@ -31,13 +31,15 @@ class DroneController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDroneRequest $request)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'drone_id' => 'required|string',
             'type_of_drone' => 'required|string',
             'battery' => 'required',
             'payload_capacity' => 'required',
+            'date_time' => 'required',
+            'location_id' => 'required',
         ]);
         if($validator->fails()) {
             return $validator->errors();
