@@ -41,6 +41,8 @@ class DroneController extends Controller
             'type_of_drone' => 'required|string',
             'battery' => 'required',
             'payload_capacity' => 'required',
+            'date_time' => 'required',
+            'location_id' => 'required',
         ]);
         if($validator->fails()) {
             return $validator->errors();

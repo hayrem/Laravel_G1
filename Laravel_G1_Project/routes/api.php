@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{FarmerController,AuthenticationController};
 
-use App\Http\Controllers\FarmController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\DroneController;
@@ -28,12 +28,8 @@ Route::post('register/sign_up',[AuthenticationController::class, 'sign_up']);
 Route::post('register/sign_in',[AuthenticationController::class, 'sign_in']);
 Route::post('register/sign_out',[AuthenticationController::class, 'sign_out']);
 
-Route::prefix('farmers')->group(function(){
-    Route::resource('farmers', FarmerController::class);
-});
-
-Route::prefix('farms')->group(function(){
-    Route::resource('farms', FarmController::class);
+Route::prefix('users')->group(function(){
+    Route::resource('user', UserController::class);
 });
 
 Route::prefix('provinces')->group(function(){
