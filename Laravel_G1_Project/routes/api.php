@@ -54,6 +54,6 @@ Route::prefix('instructions')->group(function(){
     Route::resource('instruction', InstructionController::class);
 });
 
-Route::get('maps/{provice}/{id}',[MapController::class, 'dowloadImage']);
+Route::delete('maps/{provice}/{id}',[MapController::class, 'deleteImage']);
 
 

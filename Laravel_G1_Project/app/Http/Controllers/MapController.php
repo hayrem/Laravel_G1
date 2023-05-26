@@ -107,4 +107,22 @@ class MapController extends Controller
             return response()->json(['Message' => 'Province not correct.','data'=>false], 400);
         }
     }
+    public function deleteImage($provice,$id){
+        $provinces = Province::where('province', $provice)->first();
+        if($provinces != null){
+            $province_id = $provinces->id;
+            $farm = Farm::where('id', $id)->where('province_id', $province_id)->first();
+            if($farm != null){
+                $farm_id = $farm->id;
+                $map = Map::where('farm_id',$farm_id)->delete();
+                return response()->json(['Message' => 'Delete success'], 200);
+            }
+            else{
+                return response()->json(['Message' => 'Your farm not correct.','data'=>false], 400);
+            }
+        }
+        else{
+            return response()->json(['Message' => 'Province not correct.','data'=>false], 400);
+        }
+    }
 }
