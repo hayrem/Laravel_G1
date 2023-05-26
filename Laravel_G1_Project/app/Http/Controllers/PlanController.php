@@ -90,4 +90,9 @@ class PlanController extends Controller
         $plan->delete();
         return response()->json(['Message' => 'Plan successfully deleted!'], 200);
     }
+
+    public function getSpecifictPlan($name) {
+        $plan = Plan::where('plan_name', $name)->first();
+        return response()->json(['Message' => 'Plan successfully updated', 'Plan' => $plan], 200);
+    }
 }

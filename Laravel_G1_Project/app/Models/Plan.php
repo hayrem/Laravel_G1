@@ -15,8 +15,8 @@ class Plan extends Model
         'farm_id'
     ];
 
-    public function farmer() {
-        return $this->belongsTo(Farmer::class);
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 
     public function instruction() {

@@ -43,4 +43,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function plan() {
+        return $this->hasMany(Plan::class);
+    }
+    public function farm() {
+        return $this->hasMany(Farm::class);
+    }
 }

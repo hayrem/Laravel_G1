@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Drone,Location};
+use App\Models\Drone;
 use App\Http\Requests\StoreDroneRequest;
 use App\Http\Requests\UpdateDroneRequest;
-use App\Http\Resources\{DroneResource,LocationResource};
+use App\Http\Resources\DroneResource;
 use Illuminate\Http\Request;
-use App\Http\Resources\DroneResources;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class DroneController extends Controller
@@ -41,8 +39,6 @@ class DroneController extends Controller
             'type_of_drone' => 'required|string',
             'battery' => 'required',
             'payload_capacity' => 'required',
-            'date_time' => 'required',
-            'location_id' => 'required',
         ]);
         if($validator->fails()) {
             return $validator->errors();
@@ -74,7 +70,7 @@ class DroneController extends Controller
      */
     public function update(Request $request,  $id)
     {
-        $drone = drone::find($id);
+        $drone = drone::where('drone_id', $id)->first();
         $drone->update([
             'drone_id' => request('drone_id'),
             'type_of_drone' => request('type_of_drone'),
@@ -95,19 +91,4 @@ class DroneController extends Controller
         $drone->delete();
         return response()->json(['Message' => 'Drone successfully deleted!'], 200);
     }
-
-    public function getLocationByDroneId($id)
-    {
-        $drone = Drone::where('drone_id', $id)->first();
-        $location_id = $drone->location_id;
-        $location = Location::find($location_id)->get();
-        $location = LocationResource::collection($location);
-        return response()->json(['Message' => 'Here is the drone', 'Drone' => $location], 200);
-    }
-    public function droneInfo($id)
-    {
-        $droneInfo = Drone::where('drone_id', $id)->first();
-        return response()->json(['Message' => 'Here is the drone', 'Drone' => $droneInfo], 200);
-    }
-
 }
