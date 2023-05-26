@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Instruction;
+use App\Models\Drone;
 use App\Http\Requests\StoreInstructionRequest;
 use App\Http\Requests\UpdateInstructionRequest;
 use Illuminate\Http\Request;
@@ -67,12 +68,16 @@ class InstructionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id)//$id = D23
     {
-        $instruction = Instruction::find($id);
+        $drone = Drone::where('drone_id', $id)->first();
+        $drone_id = $drone->id;
+        $instruction = Instruction::where('drone_id', $drone_id)->first();
         $instruction->update([
             'speed' => request('speed'),
             'height' => request('height'),
+            'drone_running' => request('drone_running'),
+            'drone_running' => request('drone_running'),
             'plan_id' => request('plan_id'),
             'drone_id' => request('drone_id'),
         ]);

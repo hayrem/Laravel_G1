@@ -11,6 +11,7 @@ class Instruction extends Model
     protected $fillable = [
         'speed',
         'height',
+        'drone_running',
         'plan_id',
         'drone_id'
     ];
