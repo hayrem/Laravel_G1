@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Drone;
+use App\Models\Location;
 use App\Http\Requests\StoreDroneRequest;
 use App\Http\Requests\UpdateDroneRequest;
 use App\Http\Resources\DroneResource;
+use App\Http\Resources\LocationResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 

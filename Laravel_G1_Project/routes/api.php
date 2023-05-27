@@ -43,6 +43,7 @@ Route::prefix('locations')->group(function(){
 Route::prefix('drones')->group(function(){
     Route::resource('drone', DroneController::class);
 });
+
 Route::get('drones/code/{id}',[DroneController::class, 'droneInfo']);
 Route::get('drones/code/{code}/location',[DroneController::class, 'getLocationByDroneId']);
 
