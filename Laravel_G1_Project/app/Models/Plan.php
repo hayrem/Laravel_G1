@@ -19,6 +19,10 @@ class Plan extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function farm() {
+        return $this->belongsTo(Farm::class);
+    }
+    
     public function instruction() {
         return $this->hasMany(Instruction::class);
     }

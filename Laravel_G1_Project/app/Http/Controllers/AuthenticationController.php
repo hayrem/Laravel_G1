@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Farmer;
-use App\Models\User;
+use Illuminate\Support\Facades\{Validator,Auth};
+use App\Models\{Farmer,User};
+// use App\Models\User;
 
 class AuthenticationController extends Controller
 {

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Drone;
-use App\Http\Requests\StoreDroneRequest;
-use App\Http\Requests\UpdateDroneRequest;
+// use App\Http\Requests\{StoreDroneRequest};
+// use App\Http\Requests\UpdateDroneRequest;
 use App\Http\Resources\DroneResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -17,6 +17,7 @@ class DroneController extends Controller
     public function index()
     {
         $drone = Drone::all();
+        $drone = DroneResource::collection($drone);
         return response()->json(['Message' => 'Here is all the drones', 'Drone' => $drone], 200);
 
     }

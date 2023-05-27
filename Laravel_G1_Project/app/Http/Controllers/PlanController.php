@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plan;
-use App\Http\Requests\StorePlanRequest;
-use App\Http\Requests\UpdatePlanRequest;
+// use App\Http\Requests\StorePlanRequest;
+// use App\Http\Requests\UpdatePlanRequest;
 use Illuminate\Http\Request;
+use App\Http\Resources\PlaneResource;
 use Illuminate\Support\Facades\Validator;
 
 class PlanController extends Controller
@@ -16,6 +17,7 @@ class PlanController extends Controller
     public function index()
     {
         $plan = Plan::all();
+        $plan = PlaneResource::collection($plan);
         return response()->json(['Message' => 'Here is all the plans', 'Plan' => $plan], 200);
 
     }

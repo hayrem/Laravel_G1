@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\{Map,Province,Farm};
-use App\Http\Requests\StoreMapRequest;
-use App\Http\Requests\UpdateMapRequest;
+// use App\Http\Requests\StoreMapRequest;
+// use App\Http\Requests\UpdateMapRequest;
 use Illuminate\Http\Request;
+use App\Http\Resources\MapResource;
 use Illuminate\Support\Facades\Validator;
 
 class MapController extends Controller
@@ -16,6 +17,7 @@ class MapController extends Controller
     public function index()
     {
         $map = Map::all();
+        $map = MapResource::collection($map);
         return response()->json(['Message' => 'Here is all the maps', 'map' => $map], 200);
 
     }
@@ -123,6 +125,35 @@ class MapController extends Controller
         }
         else{
             return response()->json(['Message' => 'Province not correct.','data'=>false], 400);
+        }
+    }
+    public function addNewMap(Request $request, $pro,$id){
+        $farm = Farm::find($id);
+        if ($farm != null){
+            $province_id = $farm->province_id;
+            $provinces = Province::find($province_id);
+            if($provinces->province == $pro){
+                $validator = Validator::make($request->all(), [
+                    'image' => 'required',
+                    'drone_id' => 'required',
+                ]);
+                if($validator->fails()) {
+                    return $validator->errors();
+                }
+                Map::insert([
+                    'image' => request('image'),
+                    'drone_id' => request('drone_id'),
+                    'farm_id' => $farm->id,
+                ]);
+                return response()->json(['Message' => 'map successfully created'], 200);
+            }
+            else{
+                return response()->json(['Message' => 'Province not match with plane Id.','data'=>false], 400);
+            }
+            $provinces = Province::where('province',$province);
+        }else{
+            return response()->json(['Message' => 'Cannot find farm','data'=>false], 400);
+
         }
     }
 }
