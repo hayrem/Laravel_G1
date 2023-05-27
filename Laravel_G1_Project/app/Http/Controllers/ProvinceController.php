@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Province;
-// use App\Http\Requests\StoreProvinceRequest;
-// use App\Http\Requests\UpdateProvinceRequest;
+use App\Http\Resources\ProvinceResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,15 +15,8 @@ class ProvinceController extends Controller
     public function index()
     {
         $province = Province::all();
+        $province = ProvinceResource::collection($province);
         return response()->json(['Message' => 'Here is all the provinces', 'Province' => $province], 200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -33,12 +25,13 @@ class ProvinceController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'province' => 'required',
+            'province' => 'required|unique',
         ]);
         if($validator->fails()) {
             return $validator->errors();
         }
         $province = Province::create($validator->validated());
+        $province = new ProvinceResource($province);
         return response()->json(['Message' => 'Province successfully created', 'Province' => $province], 200);
     }
 
@@ -48,15 +41,8 @@ class ProvinceController extends Controller
     public function show($id)
     {
         $province = Province::find($id);
+        $province = new ProvinceResource($province);
         return response()->json(['Message' => 'Here is the province', 'Province' => $province], 200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Province $province)
-    {
-        //
     }
 
     /**
@@ -65,9 +51,8 @@ class ProvinceController extends Controller
     public function update(Request $request, $id)
     {
         $province = Province::find($id);
-        $province->update([
-            'province' => request('province')
-        ]);
+        $province->update($request->all());
+        $province = new ProvinceResource($province);
         return response()->json(['Message' => 'Province successfully updated', 'Province' => $province], 200);
     }
 

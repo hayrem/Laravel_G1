@@ -32,7 +32,7 @@ class AuthenticationController extends Controller
             return response()->json(['message' => "success", 'token' => $token],200);
         };
     }
-    public function sign_in(Request $request){
+    public function Login(Request $request){
         $rule = [
             'email' => 'required|string',
             'password' => 'required'

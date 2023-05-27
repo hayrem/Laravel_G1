@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\{Map,Province,Farm};
-// use App\Http\Requests\StoreMapRequest;
-// use App\Http\Requests\UpdateMapRequest;
 use Illuminate\Http\Request;
 use App\Http\Resources\MapResource;
 use Illuminate\Support\Facades\Validator;
@@ -20,14 +18,6 @@ class MapController extends Controller
         $map = MapResource::collection($map);
         return response()->json(['Message' => 'Here is all the maps', 'map' => $map], 200);
 
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -53,16 +43,9 @@ class MapController extends Controller
     public function show($id)
     {
         $map = Map::find($id);
+        $map = new MapResource($map);
         return response()->json(['Message' => 'Here is the map', 'map' => $map], 200);
 
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Map $map)
-    {
-        //
     }
 
     /**
@@ -71,13 +54,8 @@ class MapController extends Controller
     public function update(Request $request, Map $id)
     {
         $map = Map::find($id);
-        $map->update([
-            'image' => request('image'),
-            'drone_id' => request('drone_id'),
-            'farm_id' => request('farm_id'),
-        ]);
+        $map->update($request->all());
         return response()->json(['Message' => 'Drone successfully updated', 'Drone' => $map], 200);
-
     }
 
     /**
@@ -88,7 +66,6 @@ class MapController extends Controller
         $map = Map::find($id);
         $map->delete();
         return response()->json(['Message' => 'map successfully deleted!'], 200);
-
     }
 
     public function dowloadImage($provice, $id){

@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plan;
-// use App\Http\Requests\StorePlanRequest;
-// use App\Http\Requests\UpdatePlanRequest;
 use Illuminate\Http\Request;
 use App\Http\Resources\PlaneResource;
 use Illuminate\Support\Facades\Validator;
@@ -20,14 +18,6 @@ class PlanController extends Controller
         $plan = PlaneResource::collection($plan);
         return response()->json(['Message' => 'Here is all the plans', 'Plan' => $plan], 200);
 
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -52,19 +42,12 @@ class PlanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Plan $id)
+    public function show($id)
     {
         $plan = Plan::find($id);
+        $plan = new PlaneResource($plan);
         return response()->json(['Message' => 'Here is the plan', 'Plan' => $plan], 200);
 
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Plan $plan)
-    {
-        //
     }
 
     /**
@@ -73,14 +56,8 @@ class PlanController extends Controller
     public function update(Request $request,  $id)
     {
         $plan = Plan::find($id);
-        $plan->update([
-            'plan_name' => request('plan_name'),
-            'date_time' => request('date_time'),
-            'farmer_id' => request('farmer_id'),
-            'map_id' => request('map_id'),
-        ]);
+        $plan->update($request->all());
         return response()->json(['Message' => 'Plan successfully updated', 'Plan' => $plan], 200);
-
     }
 
     /**
@@ -95,6 +72,7 @@ class PlanController extends Controller
 
     public function getSpecifictPlan($name) {
         $plan = Plan::where('plan_name', $name)->first();
+        $plan = new PlaneResource($plan);
         return response()->json(['Message' => 'Plan successfully updated', 'Plan' => $plan], 200);
     }
 }

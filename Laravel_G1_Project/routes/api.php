@@ -24,8 +24,11 @@ use App\Http\Controllers\{
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
-Route::middleware('auth:sanctum')->group(function() {
+Route::middleware(['auth:sanctum'])->group(function() {
     //Route for logout
     Route::post('register/sign_out',[AuthenticationController::class, 'sign_out']);
     //Route for user 
@@ -47,27 +50,22 @@ Route::middleware('auth:sanctum')->group(function() {
     //Route for drone
     Route::prefix('drones')->group(function(){
         Route::resource('drone', DroneController::class);
-        Route::resource('drone/code/{id}',[DroneController::class]);
-        Route::resource('drone/code/{code}/location',[DroneController::class]);
     });
+    Route::get('drones/code/{id}',[DroneController::class,'droneInfo']);
+    Route::get('drones/code/{id}/location',[DroneController::class, 'getLocationByDroneId']);
     //Route for plane
     Route::prefix('plans')->group(function(){
         Route::resource('plan', PlanController::class);
-        Route::resource('plan/{name}', [PlanController::class]);
     });
+    Route::get('plans/plan_name/{name}', [PlanController::class,'getSpecifictPlan']);
     //Route for maps
     Route::prefix('maps')->group(function(){
         Route::resource('map', InstructionController::class);
-        Route::resource('map/{provice}/{id}',[MapController::class]);
-        Route::resource('map/{provice}/{id}',[MapController::class]);
     });
+    Route::get('maps/map/{provice}/{id}',[MapController::class,'dowloadImage']);
+    Route::post('maps/map/{provice}/{id}',[MapController::class,'addNewMap']);
+    Route::delete('maps/map/{provice}/{id}',[MapController::class,'deleteImage']);
 });
 Route::post('register/sign_up',[AuthenticationController::class, 'sign_up']);
-Route::post('register/sign_in',[AuthenticationController::class, 'sign_in']);
-
-
-
-
-
-
+Route::post('register/sign_in',[AuthenticationController::class, 'Login']);
 

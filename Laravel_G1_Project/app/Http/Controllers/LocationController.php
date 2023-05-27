@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Location;
-// use App\Http\Requests\StoreLocationRequest;
-// use App\Http\Requests\UpdateLocationRequest;
 use App\Http\Resources\LocationResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -19,14 +17,6 @@ class LocationController extends Controller
         $location = Location::all();
         $location = LocationResource::collection($location);
         return response()->json(['Message' => 'Here is all the locations', 'Location' => $location], 200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -52,15 +42,8 @@ class LocationController extends Controller
     public function show($id)
     {
         $location = Location::find($id);
+        $location = new LocationResource($location);
         return response()->json(['Message' => 'Here is the location', 'Location' => $location], 200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Location $location)
-    {
-        //
     }
 
     /**
@@ -69,9 +52,8 @@ class LocationController extends Controller
     public function update(Request $request,  $id)
     {
         $location = Location::find($id);
-        $location->update([
-            'location' => request('location')
-        ]);
+        $location->update($request->all());
+        $location = new LocationResource($location);
         return response()->json(['Message' => 'location successfully updated', 'Location' => $location], 200);
     }
 

@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Drone;
-// use App\Http\Requests\{StoreDroneRequest};
-// use App\Http\Requests\UpdateDroneRequest;
-use App\Http\Resources\DroneResource;
+use App\Models\{Drone,Location};
+use App\Http\Resources\{DroneResource,LocationResource};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -20,14 +18,6 @@ class DroneController extends Controller
         $drone = DroneResource::collection($drone);
         return response()->json(['Message' => 'Here is all the drones', 'Drone' => $drone], 200);
 
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -59,27 +49,12 @@ class DroneController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Drone $drone)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request,  $id)
     {
-        $drone = drone::where('drone_id', $id)->first();
-        $drone->update([
-            'drone_id' => request('drone_id'),
-            'type_of_drone' => request('type_of_drone'),
-            'battery' => request('battery'),
-            'payload_capacity' => request('payload_capacity'),
-            'date_time' => request('date_time'),
-            'location_id' => request('location_id'),
-        ]);
+        $drone = drone::find($id);
+        $drone->update($request->all());
         return response()->json(['Message' => 'Drone successfully updated', 'Drone' => $drone], 200);
     }
 
@@ -92,19 +67,30 @@ class DroneController extends Controller
         $drone->delete();
         return response()->json(['Message' => 'Drone successfully deleted!'], 200);
     }
-
+    /**
+     * get location the specified resource from storage.
+     */
     public function getLocationByDroneId($id)
     {
         $drone = Drone::where('drone_id', $id)->first();
-        $location_id = $drone->location_id;
-        $location = Location::find($location_id);
-        $location = new LocationResource($location);
-        return response()->json(['Message' => 'Here is the drone', 'Drone' => $location], 200);
+        if($drone != null){
+            $location_id = $drone->location_id;
+            $location = Location::find($location_id)->first();
+            $location = new LocationResource($location);
+            return response()->json(['Message' => 'Here is the drone', 'Drone' => $location], 200);
+        }else{
+            return response()->json(['Message' => 'No location of drone id '.$id, 'request' => false], 500);
+        }
     }
     public function droneInfo($id)
     {
         $droneInfo = Drone::where('drone_id', $id)->first();
-        return response()->json(['Message' => 'Here is the drone', 'Drone' => $droneInfo], 200);
+        if($droneInfo != null){
+            $droneInfo = new DroneResource($droneInfo);
+            return response()->json(['Message' => 'Here is the drone', 'Drone' => $droneInfo], 200);
+        }else{
+            return response()->json(['Message' => 'No drone with drone id '.$id, 'request' => false], 500);   
+        }
     }
 
 }

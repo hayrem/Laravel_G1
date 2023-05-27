@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Farm;
-// use App\Http\Requests\StoreFarmRequest;
-// use App\Http\Requests\UpdateFarmRequest;
 use Illuminate\Http\Request;
+use App\Http\Resources\FarmResource;
 use Illuminate\Support\Facades\Validator;
 
 class FarmController extends Controller
@@ -16,15 +15,8 @@ class FarmController extends Controller
     public function index()
     {
         $farm = Farm::all();
+        $farm = FarmResource::collection($farm);
         return response()->json(['Message' => 'Here is all the farms!', 'Farm' => $farm], 200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -50,15 +42,8 @@ class FarmController extends Controller
     public function show($id)
     {
         $farm = Farm::find($id);
+        $farm = new FarmResource($farm);
         return response()->json(['Message' => 'Here is the farm!', 'Farm' => $farm], 200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Farm $farm)
-    {
-        //
     }
 
     /**
@@ -67,11 +52,8 @@ class FarmController extends Controller
     public function update(Request $request,  $id)
     {
         $farm = Farm::find($id);
-        $farm->update([
-            'are' => request('area'),
-            'farmer_id' => request('farmer_id'),
-            'province_id' => request('province_id')
-        ]);
+        $farm->update($request->all());
+        $farm = new FarmResource($farm);
         return response()->json(['Message' => 'Farm successfully updated!', 'Farm' => $farm], 200);
     }
 

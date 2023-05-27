@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\{Instruction,Drone};
-// use App\Models\Drone;
-// use App\Http\Requests\StoreInstructionRequest;
-// use App\Http\Requests\UpdateInstructionRequest;
 use Illuminate\Http\Request;
 use App\Http\Resources\InstructionResource;
 use Illuminate\Support\Facades\Validator;
@@ -21,14 +18,6 @@ class InstructionController extends Controller
         $instruction = InstructionResource::collection($instruction);
         return response()->json(['Message' => 'Here is all the instructions', 'Instruction' => $instruction], 200);
 
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -55,34 +44,20 @@ class InstructionController extends Controller
     public function show($id)
     {
         $instruction = Instruction::find($id);
+        $instruction = new InstructionResource($instruction);
         return response()->json(['Message' => 'Here is the instruction', 'Instruction' => $instruction], 200);
 
     }
-    
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Instruction $instruction)
-    {
-        //
-    }
-    
+
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)//$id = D23
+    public function update(Request $request, $id)
     {
         $drone = Drone::where('drone_id', $id)->first();
         $drone_id = $drone->id;
         $instruction = Instruction::where('drone_id', $drone_id)->first();
-        $instruction->update([
-            'speed' => request('speed'),
-            'height' => request('height'),
-            'drone_running' => request('drone_running'),
-            'drone_running' => request('drone_running'),
-            'plan_id' => request('plan_id'),
-            'drone_id' => request('drone_id'),
-        ]);
+        $instruction->update($request->all());
         return response()->json(['Message' => 'Instruction successfully updated', 'Instruction' => $instruction], 200);
         //
     }
