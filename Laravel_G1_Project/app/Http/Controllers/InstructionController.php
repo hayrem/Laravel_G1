@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Instruction;
-use App\Models\Drone;
-use App\Http\Requests\StoreInstructionRequest;
-use App\Http\Requests\UpdateInstructionRequest;
+use App\Models\{Instruction,Drone};
+// use App\Models\Drone;
+// use App\Http\Requests\StoreInstructionRequest;
+// use App\Http\Requests\UpdateInstructionRequest;
 use Illuminate\Http\Request;
+use App\Http\Resources\InstructionResource;
 use Illuminate\Support\Facades\Validator;
 
 class InstructionController extends Controller
@@ -17,6 +18,7 @@ class InstructionController extends Controller
     public function index()
     {
         $instruction = Instruction::all();
+        $instruction = InstructionResource::collection($instruction);
         return response()->json(['Message' => 'Here is all the instructions', 'Instruction' => $instruction], 200);
 
     }

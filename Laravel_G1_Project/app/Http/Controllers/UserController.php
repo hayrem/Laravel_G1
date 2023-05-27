@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -14,8 +15,8 @@ class UserController extends Controller
     public function index()
     {
         $user = User::all();
+        $user = UserResource::collection($user);
         return response()->json(['Message' => 'Here is all the users!', 'User' => $user], 200);
-
     }
 
     /**
@@ -43,6 +44,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
+        $user = new UserResource($user);
         return response()->json(['Message' => 'Here is the user!', 'User' => $user], 200);
 
     }

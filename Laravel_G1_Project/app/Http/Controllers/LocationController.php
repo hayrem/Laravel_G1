@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Location;
-use App\Http\Requests\StoreLocationRequest;
-use App\Http\Requests\UpdateLocationRequest;
+// use App\Http\Requests\StoreLocationRequest;
+// use App\Http\Requests\UpdateLocationRequest;
 use App\Http\Resources\LocationResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

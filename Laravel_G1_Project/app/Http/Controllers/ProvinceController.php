@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Province;
-use App\Http\Requests\StoreProvinceRequest;
-use App\Http\Requests\UpdateProvinceRequest;
+// use App\Http\Requests\StoreProvinceRequest;
+// use App\Http\Requests\UpdateProvinceRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 

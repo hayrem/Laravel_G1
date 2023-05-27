@@ -19,6 +19,7 @@ class DroneController extends Controller
     public function index()
     {
         $drone = Drone::all();
+        $drone = DroneResource::collection($drone);
         return response()->json(['Message' => 'Here is all the drones', 'Drone' => $drone], 200);
 
     }
